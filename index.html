@@ -41,6 +41,20 @@
    .view-letter{text-decoration:none;background:#606459;color:#fff;padding:16px 22px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:transform .25s,background .25s;display:inline-flex;gap:17px;align-items:center}
    .view-letter:hover{transform:translateY(-2px);background:#4b4f46}
    .view-letter span{font-family:var(--serif);font-size:20px;font-weight:400}
+
+   /* A discreet listening note, designed to match the letter's warm palette. */
+   .voice-note{max-width:430px;margin-top:32px;padding:24px 0 0;border-top:1px solid var(--border)}
+   .voice-overline{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--rust)}
+   .voice-title{font-family:var(--serif);font-weight:400;font-style:italic;font-size:clamp(23px,2.4vw,30px);line-height:1.2;margin:9px 0 7px;color:var(--ink)}
+   .voice-description{font-size:11px;line-height:1.75;color:var(--sub);max-width:365px;margin:0 0 19px}
+   .voice-controls{display:flex;align-items:center;gap:15px;max-width:390px}
+   .voice-play{width:48px;height:48px;flex:none;display:grid;place-items:center;background:#606459;color:white;border:0;border-radius:50%;cursor:pointer;font-size:17px;transition:background .2s,transform .2s}
+   .voice-play:hover{background:#4b4f46;transform:translateY(-1px)}
+   .voice-play:focus-visible,.voice-seek:focus-visible{outline:2px solid var(--rust);outline-offset:4px}
+   .voice-track{flex:1;min-width:0}
+   .voice-seek{width:100%;margin:0;accent-color:var(--rust);cursor:pointer;display:block;min-height:20px}
+   .voice-time{display:flex;justify-content:space-between;color:var(--sub);font-size:10px;letter-spacing:.03em;font-variant-numeric:tabular-nums}
+   .voice-language{margin:15px 0 0;color:#a2998c;font-family:var(--serif);font-style:italic;font-size:15px}
    .side-caption{color:#a2998c;font-size:10px;letter-spacing:.11em;text-transform:uppercase}
    .letter-wrap{position:relative}
    .outer-caption{display:flex;justify-content:space-between;align-items:center;padding:0 0 16px;color:#8e8174;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
@@ -70,7 +84,7 @@
    @media(max-width:770px){.topbar{height:75px}.shell{padding:0 22px}.brand{font-size:21px}.main-grid{display:flex;flex-direction:column;gap:48px;padding-top:48px;padding-bottom:65px}.intro{position:static;min-height:auto;width:100%;gap:46px;padding:0}.intro-main{max-width:540px}h1{font-size:clamp(60px,12vw,91px);margin:21px 0}.intro-desc{font-size:25px}.letter-wrap{width:100%}.letter{padding:45px 32px}.outer-caption{font-size:8px}.letter-copy{font-size:21.5px}.footer{flex-direction:column;align-items:flex-start}.opening-actions{margin-top:20px}}
    @media(max-width:420px){.shell{padding:0 15px}.brand{font-size:19px}.nav-right{gap:5px}.lang-toggle button{padding:7px 10px}.letter{padding:36px 24px}.letter-copy{font-size:20px}.letter-head h2{font-size:32px}.download-area a{width:100%;justify-content:space-between}}
    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
-   @media print{body{background:#fff}body::before,.topbar,.intro,.outer-caption,.download-area,.download-hint,.footer,.progress{display:none!important}.main-grid{display:block;padding:0}.shell{padding:0}.letter{border:0;box-shadow:none;padding:0}.letter::after{display:none}.letter-copy{font-size:13pt;line-height:1.38}.letter-copy p{break-inside:avoid}.letter-head{margin-bottom:20px}.signature{font-size:20pt}}
+   @media print{body{background:#fff}body::before,.topbar,.intro,.outer-caption,.download-area,.download-hint,.footer,.progress,.voice-note{display:none!important}.main-grid{display:block;padding:0}.shell{padding:0}.letter{border:0;box-shadow:none;padding:0}.letter::after{display:none}.letter-copy{font-size:13pt;line-height:1.38}.letter-copy p{break-inside:avoid}.letter-head{margin-bottom:20px}.signature{font-size:20pt}}
   </style>
 </head>
 <body>
@@ -98,6 +112,22 @@
           <div class="opening-actions">
             <a class="view-letter" href="#letter" data-i18n-html="read">Read the letter <span>↗</span></a>
           </div>
+
+          <!-- Only revealed after the recording exists on GitHub Pages. -->
+          <section class="voice-note" id="voice-note" aria-labelledby="voice-title" hidden>
+            <div class="voice-overline" data-i18n="voiceOverline">A little more from my heart</div>
+            <h2 class="voice-title" id="voice-title" data-i18n="voiceTitle">A prayer, in my own voice</h2>
+            <p class="voice-description" data-i18n="voiceDescription">For the moments when you want to hear how much you mean to me.</p>
+            <div class="voice-controls">
+              <button type="button" class="voice-play" id="voice-play" aria-label="Play the prayer recording" title="Play / Pause">▶</button>
+              <div class="voice-track">
+                <input type="range" id="voice-seek" class="voice-seek" min="0" max="222" step="0.1" value="0" aria-label="Seek through the recording">
+                <div class="voice-time"><span id="voice-current">0:00</span><span id="voice-duration">3:42</span></div>
+              </div>
+            </div>
+            <p class="voice-language" data-i18n="voiceLanguage">Spoken in English, with all my heart.</p>
+            <audio id="voice-audio" preload="none"></audio>
+          </section>
         </div>
         <div class="side-caption" data-i18n="caption">ONE LETTER · TWO LANGUAGES · ALL MY HEART</div>
       </section>
@@ -153,8 +183,8 @@
   </div>
   <script>
   const copy={
-   en:{eyebrow:'For a very special graduation',headline:'I wrote to <em>Heaven</em> about you.',intro:'Some words are meant to be given. Others are meant to be prayed. This one is both.',note:'You are entering a beautiful, unfamiliar new chapter. This is the prayer I wrote for you, and the gratitude I wanted Jesus to hear.',read:'Read the letter <span>↗</span>',caption:'ONE LETTER · TWO LANGUAGES · ALL MY HEART',chapternote:'A PRAYER, KEPT CLOSE',paperEyebrow:'A LETTER TO HEAVEN',letterTitle:'A prayer for your next chapter',signature:'To: Big J (Jesus)',pdfHint:'Both editions are available as beautifully formatted PDFs to keep forever.',footerLove:'Written with love. Read with faith.',footerRight:'For the beginning of everything that comes next.'},
-   es:{eyebrow:'Para una graduación muy especial',headline:'Le escribí al <em>Cielo</em> sobre ti.',intro:'Algunas palabras están hechas para regalarse. Otras, para convertirse en oración. Estas son ambas cosas.',note:'Estás por comenzar una etapa hermosa y desconocida. Esta es la oración que escribí por ti y la gratitud que quería expresarle a Jesús.',read:'Leer la carta <span>↗</span>',caption:'UNA CARTA · DOS IDIOMAS · TODO MI CORAZÓN',chapternote:'UNA ORACIÓN PARA ATESORAR',paperEyebrow:'UNA CARTA AL CIELO',letterTitle:'Una oración por tu nueva etapa',signature:'Para: Big J (Jesús)',pdfHint:'Las dos versiones están disponibles como archivos PDF para guardar por siempre.',footerLove:'Escrita con amor. Leída con fe.',footerRight:'Por el comienzo de todo lo que está por venir.'}
+   en:{eyebrow:'For a very special graduation',headline:'I wrote to <em>Heaven</em> about you.',intro:'Some words are meant to be given. Others are meant to be prayed. This one is both.',note:'You are entering a beautiful, unfamiliar new chapter. This is the prayer I wrote for you, and the gratitude I wanted Jesus to hear.',read:'Read the letter <span>↗</span>',caption:'ONE LETTER · TWO LANGUAGES · ALL MY HEART',chapternote:'A PRAYER, KEPT CLOSE',paperEyebrow:'A LETTER TO HEAVEN',letterTitle:'A prayer for your next chapter',signature:'To: Big J (Jesus)',pdfHint:'Both editions are available as beautifully formatted PDFs to keep forever.',voiceOverline:'A little more from my heart',voiceTitle:'A prayer, in my own voice',voiceDescription:'For the moments when you want to hear how much you mean to me.',voiceLanguage:'Spoken in English, with all my heart.',footerLove:'Written with love. Read with faith.',footerRight:'For the beginning of everything that comes next.'},
+   es:{eyebrow:'Para una graduación muy especial',headline:'Le escribí al <em>Cielo</em> sobre ti.',intro:'Algunas palabras están hechas para regalarse. Otras, para convertirse en oración. Estas son ambas cosas.',note:'Estás por comenzar una etapa hermosa y desconocida. Esta es la oración que escribí por ti y la gratitud que quería expresarle a Jesús.',read:'Leer la carta <span>↗</span>',caption:'UNA CARTA · DOS IDIOMAS · TODO MI CORAZÓN',chapternote:'UNA ORACIÓN PARA ATESORAR',paperEyebrow:'UNA CARTA AL CIELO',letterTitle:'Una oración por tu nueva etapa',signature:'Para: Big J (Jesús)',pdfHint:'Las dos versiones están disponibles como archivos PDF para guardar por siempre.',voiceOverline:'Un poquito más de mi corazón',voiceTitle:'Una oración, con mi propia voz',voiceDescription:'Para esos momentos en los que quieras escuchar cuánto significas para mí.',voiceLanguage:'Grabada en inglés, con todo mi corazón.',footerLove:'Escrita con amor. Leída con fe.',footerRight:'Por el comienzo de todo lo que está por venir.'}
   };
   function setLang(lang){
    document.documentElement.lang=lang;
@@ -162,11 +192,60 @@
    document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=copy[lang][el.dataset.i18n]});
    document.querySelectorAll('[data-i18n-html]').forEach(el=>{el.innerHTML=copy[lang][el.dataset.i18nHtml]});
    for(const x of ['en','es']){let b=document.getElementById('lang-'+x);b.classList.toggle('active',x===lang);b.setAttribute('aria-pressed',String(x===lang))}
+   const play=document.getElementById('voice-play');
+   const audio=document.getElementById('voice-audio');
+   play.setAttribute('aria-label',audio.paused?(lang==='es'?'Reproducir mi oración':'Play the prayer recording'):(lang==='es'?'Pausar mi oración':'Pause the prayer recording'));
+   document.getElementById('voice-seek').setAttribute('aria-label',lang==='es'?'Avanzar o retroceder en la grabación':'Seek through the recording');
    try{localStorage.setItem('prayer-language',lang)}catch(_){}
   }
   document.getElementById('lang-en').addEventListener('click',()=>setLang('en'));
   document.getElementById('lang-es').addEventListener('click',()=>setLang('es'));
   try{if(localStorage.getItem('prayer-language')==='es')setLang('es')}catch(_){}
+
+  // Keep the site unchanged for visitors until the audio file is uploaded.
+  const voiceAudio=document.getElementById('voice-audio');
+  const voicePlay=document.getElementById('voice-play');
+  const voiceSeek=document.getElementById('voice-seek');
+  const voiceCurrent=document.getElementById('voice-current');
+  const voiceDuration=document.getElementById('voice-duration');
+  const voiceFile='a-prayer-in-my-voice.m4a';
+  function voiceTime(seconds){
+    if(!Number.isFinite(seconds)||seconds<0)return '0:00';
+    const whole=Math.floor(seconds);
+    return Math.floor(whole/60)+':'+String(whole%60).padStart(2,'0');
+  }
+  function voiceButtons(){
+    const playing=!voiceAudio.paused;
+    const spanish=document.documentElement.lang==='es';
+    voicePlay.textContent=playing?'Ⅱ':'▶';
+    voicePlay.setAttribute('aria-label',playing?(spanish?'Pausar mi oración':'Pause the prayer recording'):(spanish?'Reproducir mi oración':'Play the prayer recording'));
+  }
+  voicePlay.addEventListener('click',()=>{
+    if(voiceAudio.paused){voiceAudio.play().catch(()=>voiceButtons())}
+    else voiceAudio.pause();
+  });
+  voiceSeek.addEventListener('input',()=>{
+    if(Number.isFinite(voiceAudio.duration))voiceAudio.currentTime=Number(voiceSeek.value);
+  });
+  voiceAudio.addEventListener('timeupdate',()=>{
+    voiceCurrent.textContent=voiceTime(voiceAudio.currentTime);
+    if(!voiceSeek.matches(':active'))voiceSeek.value=String(voiceAudio.currentTime);
+  });
+  voiceAudio.addEventListener('durationchange',()=>{
+    if(Number.isFinite(voiceAudio.duration)){
+      voiceSeek.max=String(voiceAudio.duration);
+      voiceDuration.textContent=voiceTime(voiceAudio.duration);
+    }
+  });
+  for(const eventName of ['play','pause','ended'])voiceAudio.addEventListener(eventName,voiceButtons);
+  voiceAudio.addEventListener('error',()=>{document.getElementById('voice-note').hidden=true});
+  fetch(voiceFile,{method:'HEAD'})
+    .then(response=>{
+      if(!response.ok)return;
+      voiceAudio.src=voiceFile;
+      voiceAudio.preload='metadata';
+      document.getElementById('voice-note').hidden=false;
+    }).catch(()=>{});
   function updateProgress(){let max=document.documentElement.scrollHeight-innerHeight;document.getElementById('progress').style.width=(max>0?(scrollY/max)*100:0)+'%'}
   window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
   </script>
