@@ -150,7 +150,7 @@
         <div class="side-caption" data-i18n="caption">ONE LETTER · TWO LANGUAGES · ALL MY HEART</div>
       </section>
       <section class="letter-wrap" id="letter" aria-labelledby="letter-title">
-        <div class="outer-caption"><span data-i18n="chapternote">A PRAYER, KEPT CLOSE</span><span>01 / 01</span></div>
+        <div class="outer-caption"><span data-i18n="chapternote">A PRAYER, KEPT CLOSE</span><span>01 / 02</span></div>
         <article class="letter">
           <div class="letter-head">
              <span class="cross" aria-hidden="true">✝</span>
@@ -198,7 +198,7 @@
       </section>
     </main>
 
-    <section class="star-chapter" id="star-chapter" aria-labelledby="star-title" hidden>
+    <section class="star-chapter" id="star-chapter" aria-labelledby="star-title">
       <div class="star-layout">
         <div class="star-story">
           <span class="star-eyebrow" data-i18n="starEyebrow">02 / 02 · A moment written in the sky</span>
@@ -209,7 +209,7 @@
           <a class="star-keep" href="our-night-sky.png" target="_blank" rel="noopener" data-i18n-html="starKeep" aria-label="Open the star map to save it">Keep this little piece of our sky <span aria-hidden="true">↗</span></a>
         </div>
         <figure class="star-map">
-          <img id="star-map-image" alt="Star map generated for Bogotá, Colombia, on March 16, 2025" width="1474" height="2048" loading="lazy" decoding="async">
+          <img id="star-map-image" src="our-night-sky.png" alt="Star map generated for Bogotá, Colombia, on March 16, 2025" width="1474" height="2048" loading="lazy" decoding="async">
           <figcaption data-i18n="starCaption">The sky over Bogotá · March 16, 2025</figcaption>
         </figure>
       </div>
@@ -282,16 +282,6 @@
       document.getElementById('voice-note').hidden=false;
     }).catch(()=>{});
 
-  // Wait for the real star map file before displaying Chapter II.
-  // This prevents a broken-image placeholder before the PNG is uploaded.
-  const starMapImage=document.getElementById('star-map-image');
-  starMapImage.addEventListener('load',()=>{
-    document.getElementById('star-chapter').hidden=false;
-    const chapterCount=document.querySelector('.outer-caption span:last-child');
-    if(chapterCount)chapterCount.textContent='01 / 02';
-    updateProgress();
-  });
-  starMapImage.src='our-night-sky.png';
   function updateProgress(){let max=document.documentElement.scrollHeight-innerHeight;document.getElementById('progress').style.width=(max>0?(scrollY/max)*100:0)+'%'}
   window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
   </script>
