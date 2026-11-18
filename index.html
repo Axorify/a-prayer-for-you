@@ -76,6 +76,21 @@
    .download-area a:hover{border-color:var(--rust);background:#fdfaf3;transform:translateY(-2px)}
    .download-area .arrow{color:var(--rust);font-size:15px}
    .download-hint{font-size:11px;color:#8a8074;margin-top:16px;line-height:1.65}
+
+   /* Chapter II: preserve the real, uploaded celestial map without cropping it. */
+   .star-chapter{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 15% 10%,#1b2b43 0%,#101a2d 48%,#0c1523 100%);color:#f3ebdb;margin:16px 0 72px;padding:clamp(36px,6vw,86px);border:1px solid rgba(195,164,117,.28)}
+   .star-chapter::before{content:'';pointer-events:none;position:absolute;inset:0;z-index:-1;opacity:.45;background-image:radial-gradient(1px 1px at 7% 18%,#f2e1c1 95%,transparent),radial-gradient(1px 1px at 68% 12%,#f2e1c1 95%,transparent),radial-gradient(1px 1px at 43% 73%,#f2e1c1 95%,transparent),radial-gradient(1px 1px at 84% 82%,#f2e1c1 95%,transparent);background-size:170px 190px,220px 240px,240px 270px,290px 220px}
+   .star-layout{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1fr);align-items:center;gap:clamp(24px,5vw,78px)}
+   .star-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#d2b68e}
+   .star-section-title{font-family:var(--serif);font-weight:400;font-size:clamp(47px,5.25vw,82px);line-height:1.03;letter-spacing:-.035em;margin:22px 0 25px}
+   .star-rule{width:46px;height:1px;background:#ad8e66;margin:0 0 25px}
+   .star-message{font-family:var(--serif);font-style:italic;font-size:clamp(23px,2.1vw,29px);line-height:1.38;color:#e8d9bd;margin:0 0 29px;max-width:430px}
+   .star-detail{font-size:11px;letter-spacing:.12em;text-transform:uppercase;line-height:1.9;color:#bcb6ae;margin:0 0 34px}
+   .star-keep{display:inline-flex;gap:13px;align-items:center;color:#ebdab9;text-decoration:none;border-bottom:1px solid #9c8466;padding:0 0 10px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:color .2s,border-color .2s}
+   .star-keep:hover{color:#fff;border-color:#fff}
+   .star-map{margin:0;min-width:0;text-align:center}
+   .star-map img{width:100%;max-width:485px;max-height:740px;object-fit:contain;display:block;margin:0 auto;filter:drop-shadow(0 23px 40px rgba(0,0,0,.28))}
+   .star-map figcaption{margin-top:15px;color:#adaaa7;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
    .footer{padding:36px 0 55px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:20px}
    .footer em{font-family:var(--serif);font-size:20px;color:var(--rust)}
    .footer span{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#8f8678}
@@ -83,8 +98,11 @@
    @media(max-width:1020px){.shell{padding:0 33px}.main-grid{gap:38px;grid-template-columns:minmax(260px,.9fr) minmax(420px,1.1fr);padding-top:60px}.intro{min-height:520px}.nav-note{display:none}.letter{padding:42px 37px}h1{font-size:72px}}
    @media(max-width:770px){.topbar{height:75px}.shell{padding:0 22px}.brand{font-size:21px}.main-grid{display:flex;flex-direction:column;gap:48px;padding-top:48px;padding-bottom:65px}.intro{position:static;min-height:auto;width:100%;gap:46px;padding:0}.intro-main{max-width:540px}h1{font-size:clamp(60px,12vw,91px);margin:21px 0}.intro-desc{font-size:25px}.letter-wrap{width:100%}.letter{padding:45px 32px}.outer-caption{font-size:8px}.letter-copy{font-size:21.5px}.footer{flex-direction:column;align-items:flex-start}.opening-actions{margin-top:20px}}
    @media(max-width:420px){.shell{padding:0 15px}.brand{font-size:19px}.nav-right{gap:5px}.lang-toggle button{padding:7px 10px}.letter{padding:36px 24px}.letter-copy{font-size:20px}.letter-head h2{font-size:32px}.download-area a{width:100%;justify-content:space-between}}
+
+   @media(max-width:770px){.star-chapter{margin:0 -7px 55px;padding:43px 24px 40px}.star-layout{grid-template-columns:1fr;gap:39px}.star-section-title{font-size:clamp(48px,12vw,71px);max-width:520px}.star-message{max-width:500px}.star-map img{max-width:min(100%,420px);max-height:none}.star-detail{margin-bottom:22px}}
+   @media(max-width:420px){.star-chapter{margin:0 -7px 42px;padding:35px 17px}.star-section-title{font-size:48px}.star-message{font-size:23px}}
    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
-   @media print{body{background:#fff}body::before,.topbar,.intro,.outer-caption,.download-area,.download-hint,.footer,.progress,.voice-note{display:none!important}.main-grid{display:block;padding:0}.shell{padding:0}.letter{border:0;box-shadow:none;padding:0}.letter::after{display:none}.letter-copy{font-size:13pt;line-height:1.38}.letter-copy p{break-inside:avoid}.letter-head{margin-bottom:20px}.signature{font-size:20pt}}
+   @media print{body{background:#fff}body::before,.topbar,.intro,.outer-caption,.download-area,.download-hint,.footer,.progress,.voice-note,.star-chapter{display:none!important}.main-grid{display:block;padding:0}.shell{padding:0}.letter{border:0;box-shadow:none;padding:0}.letter::after{display:none}.letter-copy{font-size:13pt;line-height:1.38}.letter-copy p{break-inside:avoid}.letter-head{margin-bottom:20px}.signature{font-size:20pt}}
   </style>
 </head>
 <body>
@@ -179,12 +197,29 @@
         <p class="download-hint" data-i18n="pdfHint">Both editions are available as beautifully formatted PDFs to keep forever.</p>
       </section>
     </main>
+
+    <section class="star-chapter" id="star-chapter" aria-labelledby="star-title" hidden>
+      <div class="star-layout">
+        <div class="star-story">
+          <span class="star-eyebrow" data-i18n="starEyebrow">02 / 02 · A moment written in the sky</span>
+          <h2 class="star-section-title" id="star-title" data-i18n="starTitle">The day we became us.</h2>
+          <div class="star-rule" aria-hidden="true"></div>
+          <p class="star-message" data-i18n="starMessage">The universe looked like this on the day our story changed. To everyone else, it was another day. To me, it was the beginning of us.</p>
+          <p class="star-detail">Bogotá, Colombia · March 16, 2025</p>
+          <a class="star-keep" href="our-night-sky.png" target="_blank" rel="noopener" data-i18n-html="starKeep" aria-label="Open the star map to save it">Keep this little piece of our sky <span aria-hidden="true">↗</span></a>
+        </div>
+        <figure class="star-map">
+          <img id="star-map-image" alt="Star map generated for Bogotá, Colombia, on March 16, 2025" width="1474" height="2048" loading="lazy" decoding="async">
+          <figcaption data-i18n="starCaption">The sky over Bogotá · March 16, 2025</figcaption>
+        </figure>
+      </div>
+    </section>
     <footer class="footer"><em data-i18n="footerLove">Written with love.</em><span data-i18n="footerRight">For the beginning of everything that comes next.</span></footer>
   </div>
   <script>
   const copy={
-   en:{eyebrow:'For a very special graduation',headline:'I wrote to <em>Heaven</em> about you.',intro:'Some words are meant to be given. Others are meant to be prayed. This one is both.',note:'You are entering a beautiful, unfamiliar new chapter. This is the prayer I wrote for you, and the gratitude I wanted Jesus to hear.',read:'Read the letter <span>↗</span>',caption:'ONE LETTER · TWO LANGUAGES · ALL MY HEART',chapternote:'A PRAYER, KEPT CLOSE',paperEyebrow:'A LETTER TO HEAVEN',letterTitle:'A prayer for your next chapter',signature:'To: Big J (Jesus)',pdfHint:'Both editions are available as beautifully formatted PDFs to keep forever.',voiceOverline:'A little more from my heart',voiceTitle:'A prayer, in my own voice',voiceDescription:'For the moments when you want to hear how much you mean to me.',voiceLanguage:'Spoken in English, with all my heart.',footerLove:'Written with love. Read with faith.',footerRight:'For the beginning of everything that comes next.'},
-   es:{eyebrow:'Para una graduación muy especial',headline:'Le escribí al <em>Cielo</em> sobre ti.',intro:'Algunas palabras están hechas para regalarse. Otras, para convertirse en oración. Estas son ambas cosas.',note:'Estás por comenzar una etapa hermosa y desconocida. Esta es la oración que escribí por ti y la gratitud que quería expresarle a Jesús.',read:'Leer la carta <span>↗</span>',caption:'UNA CARTA · DOS IDIOMAS · TODO MI CORAZÓN',chapternote:'UNA ORACIÓN PARA ATESORAR',paperEyebrow:'UNA CARTA AL CIELO',letterTitle:'Una oración por tu nueva etapa',signature:'Para: Big J (Jesús)',pdfHint:'Las dos versiones están disponibles como archivos PDF para guardar por siempre.',voiceOverline:'Un poquito más de mi corazón',voiceTitle:'Una oración, con mi propia voz',voiceDescription:'Para esos momentos en los que quieras escuchar cuánto significas para mí.',voiceLanguage:'Grabada en inglés, con todo mi corazón.',footerLove:'Escrita con amor. Leída con fe.',footerRight:'Por el comienzo de todo lo que está por venir.'}
+   en:{eyebrow:'For a very special graduation',headline:'I wrote to <em>Heaven</em> about you.',intro:'Some words are meant to be given. Others are meant to be prayed. This one is both.',note:'You are entering a beautiful, unfamiliar new chapter. This is the prayer I wrote for you, and the gratitude I wanted Jesus to hear.',read:'Read the letter <span>↗</span>',caption:'ONE LETTER · TWO LANGUAGES · ALL MY HEART',chapternote:'A PRAYER, KEPT CLOSE',paperEyebrow:'A LETTER TO HEAVEN',letterTitle:'A prayer for your next chapter',signature:'To: Big J (Jesus)',pdfHint:'Both editions are available as beautifully formatted PDFs to keep forever.',voiceOverline:'A little more from my heart',voiceTitle:'A prayer, in my own voice',voiceDescription:'For the moments when you want to hear how much you mean to me.',voiceLanguage:'Spoken in English, with all my heart.',starEyebrow:'02 / 02 · A moment written in the sky',starTitle:'The day we became us.',starMessage:'The universe looked like this on the day our story changed. To everyone else, it was another day. To me, it was the beginning of us.',starKeep:'Keep this little piece of our sky <span aria-hidden="true">↗</span>',starCaption:'The sky over Bogotá · March 16, 2025',footerLove:'Written with love. Read with faith.',footerRight:'For the beginning of everything that comes next.'},
+   es:{eyebrow:'Para una graduación muy especial',headline:'Le escribí al <em>Cielo</em> sobre ti.',intro:'Algunas palabras están hechas para regalarse. Otras, para convertirse en oración. Estas son ambas cosas.',note:'Estás por comenzar una etapa hermosa y desconocida. Esta es la oración que escribí por ti y la gratitud que quería expresarle a Jesús.',read:'Leer la carta <span>↗</span>',caption:'UNA CARTA · DOS IDIOMAS · TODO MI CORAZÓN',chapternote:'UNA ORACIÓN PARA ATESORAR',paperEyebrow:'UNA CARTA AL CIELO',letterTitle:'Una oración por tu nueva etapa',signature:'Para: Big J (Jesús)',pdfHint:'Las dos versiones están disponibles como archivos PDF para guardar por siempre.',voiceOverline:'Un poquito más de mi corazón',voiceTitle:'Una oración, con mi propia voz',voiceDescription:'Para esos momentos en los que quieras escuchar cuánto significas para mí.',voiceLanguage:'Grabada en inglés, con todo mi corazón.',starEyebrow:'02 / 02 · Un momento escrito en las estrellas',starTitle:'El día que comenzó lo nuestro.',starMessage:'Así se veía el universo el día en que cambió nuestra historia. Para el resto del mundo fue un día más. Para mí, fue el comienzo de nosotros.',starKeep:'Guarda un pedacito de nuestro cielo <span aria-hidden="true">↗</span>',starCaption:'El cielo de Bogotá · 16 de marzo de 2025',footerLove:'Escrita con amor. Leída con fe.',footerRight:'Por el comienzo de todo lo que está por venir.'}
   };
   function setLang(lang){
    document.documentElement.lang=lang;
@@ -246,6 +281,17 @@
       voiceAudio.preload='metadata';
       document.getElementById('voice-note').hidden=false;
     }).catch(()=>{});
+
+  // Wait for the real star map file before displaying Chapter II.
+  // This prevents a broken-image placeholder before the PNG is uploaded.
+  const starMapImage=document.getElementById('star-map-image');
+  starMapImage.addEventListener('load',()=>{
+    document.getElementById('star-chapter').hidden=false;
+    const chapterCount=document.querySelector('.outer-caption span:last-child');
+    if(chapterCount)chapterCount.textContent='01 / 02';
+    updateProgress();
+  });
+  starMapImage.src='our-night-sky.png';
   function updateProgress(){let max=document.documentElement.scrollHeight-innerHeight;document.getElementById('progress').style.width=(max>0?(scrollY/max)*100:0)+'%'}
   window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
   </script>
